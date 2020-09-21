@@ -14,7 +14,7 @@ token = os.environ.get('token')
 # hours of looking through docs and I gave up and reverted back to this... If I get time I'll try to get
 # this working properly.
 base_request_url = 'https://api.trello.com/1/boards/'+boardId+'/'
-request_credentials = '?key='+key+'&token='+token
+request_credentials = f'?key={key}&token={token}'
 
 def get_items() -> list:
     """
