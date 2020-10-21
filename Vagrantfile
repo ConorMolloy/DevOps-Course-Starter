@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
-  config.vm.provision "shell", privilaged: false, inline <<-SHELL
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
     sudo apt-get update
 
     #Install pyenv prerequisites
@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
   config.trigger.after :up do |trigger|
     trigger.name = "Launch App"
     trigger.info = "Running the TODO app setup script"
-    trigger.run_remote = {privilaged: false, inline: "
+    trigger.run_remote = {privileged: false, inline: "
       #Install dependencies and Launch
       cd /vagrant
       poetry install
@@ -37,5 +37,5 @@ Vagrant.configure("2") do |config|
     "}
   end
 
-  config.vm.network "forward_port", guest: 5000, host: 5000
+  config.vm.network "forwarded_port", guest: 5000, host: 5000
 end
