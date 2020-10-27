@@ -4,14 +4,22 @@
 
 The project uses a virtual environment to isolate package dependencies. To create the virtual environment and install required packages, run the following from a bash shell terminal:
 
+### Poetry installation (Bash)
+```bash
+$ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+```
+
 ### On macOS and Linux
 ```bash
-$ source setup.sh
+$ poetry install
 ```
-### On Windows (Using Git Bash)
+
+You'll also need to clone a new `.env` file from the `.env.template` to store local configuration options. This is a one-line operation on first setup:
 ```bash
-$ source setup.sh --windows
+$ cp .env.template .env # (first time only)
 ```
+
+The `.env` file is used by flask to set environment variables when running ` flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a SECRET_KEY variable which is ised to encrypt the flask session cookie.
 
 Once the setup script has completed and all packages have been installed, start the Flask app by running:
 ```bash

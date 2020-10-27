@@ -116,3 +116,5 @@ env/
 .env
 .idea/
 .vscode/
+.venv
+.vagrant
