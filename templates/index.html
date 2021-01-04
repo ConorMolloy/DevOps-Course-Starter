@@ -19,7 +19,7 @@
       <h2>Things To Do!</h2>
       <ul class="list-group-item">
         <!-- List the todo items here -->
-          {% for item in data %}
+          {% for item in view_model.items %}
             <li>{{ item.title }} - {{item.status}} 
               <table>
                 {% if item.status == 'Not Started' %}

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import trello_client as session
+from viewmodel import ViewModel
 
 app = Flask(__name__)
 app.config.from_object('flask_config.Config')
@@ -8,13 +9,15 @@ app.config.from_object('flask_config.Config')
 @app.route('/', methods=['GET'])
 def index():
     sorted_items = sorted(session.get_items(), key=lambda item: item.status, reverse=True)
-    return render_template('index.html', data=sorted_items)
+    view_model = ViewModel(sorted_items)
+    return render_template('index.html', view_model=view_model)
 
 
 @app.route('/', methods=['POST'])
 def post_item():
     session.add_item(request.form.get('item'))
     return redirect('/')
+
 
 @app.route('/update/<id>', methods=['POST'])
 def mark_complete(id):
