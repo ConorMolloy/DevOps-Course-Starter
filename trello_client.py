@@ -3,6 +3,7 @@ import requests
 import logging
 import os
 import json
+from to_do_item import ToDoItem
 
 logging.basicConfig(level=logging.DEBUG)
 boardId = os.environ.get('boardId')
@@ -61,7 +62,7 @@ def add_item(title):
 
     todo_list = ''
     for key, value in json_list.items():
-        if value == 'Not Started':
+        if value == 'To Do':
             todo_list = key
 
     url = 'https://api.trello.com/1/cards'+request_credentials+'&idList='+todo_list+'&name='+title
@@ -83,9 +84,9 @@ def mark_complete(id):
     completed_list = ''
 
     for key, value in json_list.items():
-        if value == 'Not Started':
+        if value == 'To Do':
             todo_list = key
-        elif value == 'Completed':
+        elif value == 'Done':
             completed_list = key    
 
     url = 'https://api.trello.com/1/cards/'+id+request_credentials+'&idList='+completed_list
@@ -112,12 +113,3 @@ def get_lists() -> dict:
     for node in json_response:
         board_id_dict[node['id']] = node['name']
     return board_id_dict    
-
-class ToDoItem(object):
-    def __init__(self, id, status, title):
-        self.id = id
-        self.status = status
-        self.title = title
-
-    def __str__(self):
-        return self.title+'-'+self.status
