@@ -32,7 +32,7 @@ def get_items() -> list:
 
     items = []
     for node in cards_json:
-        items.append(ToDoItem(node['id'], list_id_dict[node['idList']], node['name']))  
+        items.append(ToDoItem(node['id'], list_id_dict[node['idList']], node['name'], node['dateLastActivity']))  
     
     return items
 
