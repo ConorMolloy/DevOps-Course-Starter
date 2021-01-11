@@ -1,4 +1,5 @@
 # from flask import session
+from datetime import datetime
 import requests
 import logging
 import os
@@ -32,7 +33,8 @@ def get_items() -> list:
 
     items = []
     for node in cards_json:
-        items.append(ToDoItem(node['id'], list_id_dict[node['idList']], node['name'], node['dateLastActivity']))  
+        date_in_datetime = datetime.strptime(node['dateLastActivity'], '%Y-%m-%dT%H:%M:%S.%fZ')
+        items.append(ToDoItem(node['id'], list_id_dict[node['idList']], node['name'], date_in_datetime))  
     
     return items
 

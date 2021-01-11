@@ -1,5 +1,8 @@
+from datetime import datetime
+
+
 class ToDoItem(object):
-    def __init__(self, id, status, title, last_modified):
+    def __init__(self, id:str, status:str, title:str, last_modified:datetime):
         self.id = id
         self.status = status
         self.title = title
