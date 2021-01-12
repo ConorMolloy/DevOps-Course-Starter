@@ -1,22 +1,22 @@
 # from flask import session
 from datetime import datetime
+from _pytest import config
 import requests
 import logging
 import os
 import json
 from to_do_item import ToDoItem
+from flask_config import Config
 
 logging.basicConfig(level=logging.DEBUG)
-boardId = os.environ.get('boardId')
-key = os.environ.get('key')
-token = os.environ.get('token')
+config = Config()
 
 # I understand that this is not the best wat to build urls for requests but using the built in functions 
 # and passing in dictionaries for parameters and auth was return a 401 for every request. After several 
 # hours of looking through docs and I gave up and reverted back to this... If I get time I'll try to get
 # this working properly.
-base_request_url = 'https://api.trello.com/1/boards/'+boardId+'/'
-request_credentials = f'?key={key}&token={token}'
+base_request_url = 'https://api.trello.com/1/boards/'+config.boardId+'/'
+request_credentials = f'?key={config.key}&token={config.token}'
 
 def get_items() -> list:
     """
