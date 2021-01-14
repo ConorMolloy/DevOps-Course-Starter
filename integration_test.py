@@ -22,10 +22,17 @@ def client():
 
 @patch('requests.get')
 def test_index_page(mock_get_requests, client):
-    mock_response = Response()
-    mock_response.status_code = 200
-    mock_response._content = b'{"id": "123", "idList": "987", "name": "Why hello there", "dateLastActivity": "2021-01-06T21:14:06.518Z"}'
+    mock_item_response = Response()
+    mock_item_response.status_code = 200
+    mock_item_response._content = b'[{"id": "123", "idList": "987", "name": "Why hello there", "dateLastActivity": "2021-01-06T21:14:06.518Z"}]'
 
-    mock_get_requests.return_value = mock_response
+    mock_list_response = Response()
+    mock_list_response.status_code = 200
+    mock_list_response._content = b'[{"id": "987", "name": "Done"}]'
+
+    mock_get_requests.side_effect = [mock_item_response, mock_list_response]
+
     response = client.get('/')
+    assert 200 == response.status_code
+    assert "Why hello there" in response.data.decode()
     

@@ -1,6 +1,4 @@
-import os
 import pytest
-import time
 import app
 from selenium import webdriver
 from threading import Thread
