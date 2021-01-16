@@ -1,6 +1,6 @@
 from typing import List
-from viewmodel import ViewModel
-from to_do_item import ToDoItem
+from app.viewmodel import ViewModel
+from app.to_do_item import ToDoItem
 from datetime import datetime, timedelta
 
 class TestViewModel:

@@ -1,12 +1,10 @@
-# from flask import session
 from datetime import datetime
 from _pytest import config
 import requests
 import logging
-import os
 import json
-from to_do_item import ToDoItem
-from flask_config import Config
+from app.to_do_item import ToDoItem
+from config import Config
 
 logging.basicConfig(level=logging.DEBUG)
 config = Config()

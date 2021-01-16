@@ -1,4 +1,4 @@
-from to_do_item import ToDoItem
+from app.to_do_item import ToDoItem
 
 class TestToDoItem:
     def test_to_do_item_str(self):

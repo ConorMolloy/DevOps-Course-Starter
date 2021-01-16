@@ -1,11 +1,8 @@
-import json
-from unittest import mock
 import pytest
 from requests.models import Response
-import app
-import requests
+from app import app
 from dotenv import find_dotenv, load_dotenv
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 @pytest.fixture
 def client():
@@ -14,7 +11,7 @@ def client():
     load_dotenv(file_path, override=True)
 
     #Create the new app.
-    test_app = app.create_app()
+    test_app = app
     
     # Use the app to create a test_client that can be used in our tests.
     with test_app.test_client() as client: 
