@@ -3,10 +3,19 @@ import os
 
 
 class Config:
-    """Base configuration variables."""
-    SECRET_KEY = os.environ.get('SECRET_KEY')
-    boardId = os.environ.get('boardId')
-    key = os.environ.get('key')
-    token = os.environ.get('token')
-    if not SECRET_KEY:
-        raise ValueError("No SECRET_KEY set for Flask application. Did you forget to run setup.sh?")
+    def __init__(self):
+        self._boardId = os.environ.get('boardId')
+        self._key = os.environ.get('key')
+        self._token = os.environ.get('token')
+
+    @property
+    def boardId(self) -> str:
+        return self._boardId
+
+    @property
+    def key(self) -> str:
+        return self._key
+
+    @property
+    def token(self) -> str:
+        return self._token
