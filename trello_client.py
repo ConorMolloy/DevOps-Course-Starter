@@ -1,25 +1,16 @@
 from datetime import datetime
 import requests
-import logging
 import json
 from to_do_item import ToDoItem
 from flask_config import Config
 
 
-class Routes:
+class TrelloClient:
     config: Config = Config()
     
     def __init__(self):
         self.base_request_url = 'https://api.trello.com/1/boards/'+self.config.boardId+'/'
         self.request_credentials = f'?key={self.config.key}&token={self.config.token}'
-
-    logging.basicConfig(level=logging.DEBUG)
-
-    # I understand that this is not the best wat to build urls for requests but using the built in functions 
-    # and passing in dictionaries for parameters and auth was return a 401 for every request. After several 
-    # hours of looking through docs and I gave up and reverted back to this... If I get time I'll try to get
-    # this working properly.
-   
 
     def get_items(self) -> list:
         """
@@ -51,7 +42,7 @@ class Routes:
         Returns:
             item: The saved item, or None if no items match the specified ID.
         """
-        items = Routes.get_lists()
+        items = TrelloClient.get_lists()
         return next((item for item in items if item['id'] == int(id)), None)
 
 
