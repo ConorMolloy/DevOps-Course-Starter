@@ -1,9 +1,6 @@
-import json
-from unittest import mock
 import pytest
 from requests.models import Response
 import app
-import requests
 from dotenv import find_dotenv, load_dotenv
 from unittest.mock import Mock, patch
 

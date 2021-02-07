@@ -4,10 +4,13 @@ import app
 import time
 from selenium import webdriver
 from threading import Thread
+from dotenv import find_dotenv, load_dotenv
 
 @pytest.fixture(scope='module')
 def test_app():
     # construct the new application
+    file_path = find_dotenv('.env')
+    load_dotenv(file_path, override=True)
     application = app.create_app()
 
     # start the app in its own thread.

@@ -6,9 +6,9 @@ from flask_config import Config
 
 
 class TrelloClient:
-    config: Config = Config()
     
     def __init__(self):
+        self.config: Config = Config()
         self.base_request_url = 'https://api.trello.com/1/boards/'+self.config.boardId+'/'
         self.request_credentials = f'?key={self.config.key}&token={self.config.token}'
 
