@@ -1,8 +1,8 @@
 from datetime import datetime
 import requests
 import json
-from to_do_item import ToDoItem
-from flask_config import Config
+from app.to_do_item import ToDoItem
+from app.flask_config import Config
 
 
 class TrelloClient:

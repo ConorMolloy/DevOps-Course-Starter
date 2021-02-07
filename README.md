@@ -48,5 +48,5 @@ Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser
 # Running Tests
 All tests can be run with pytest using the following commands
 ```bash
-poetry run pytest <test_file_you_wish_to_test>
+poetry run pytest test
 ```

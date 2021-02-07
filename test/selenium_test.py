@@ -1,6 +1,6 @@
 from datetime import time
 import pytest
-import app
+from app.create_app import create_app
 import time
 from selenium import webdriver
 from threading import Thread
@@ -11,7 +11,7 @@ def test_app():
     # construct the new application
     file_path = find_dotenv('.env')
     load_dotenv(file_path, override=True)
-    application = app.create_app()
+    application = create_app()
 
     # start the app in its own thread.
     thread = Thread(target=lambda: application.run(use_reloader=False)) 
