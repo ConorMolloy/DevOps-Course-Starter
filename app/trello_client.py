@@ -99,9 +99,8 @@ class TrelloClient:
         """
         url = 'https://api.trello.com/1/cards/'+id+self.request_credentials
 
-        response = requests.delete(url)
+        requests.delete(url)
 
-        print(response.text)
 
     def get_lists(self) -> dict:
         json_response = json.loads(requests.get(self.base_request_url+'lists'+self.request_credentials).content)
