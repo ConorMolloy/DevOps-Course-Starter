@@ -9,8 +9,7 @@ def create_app():
 
     @app.route('/', methods=['GET'])
     def index():
-        sorted_items = sorted(client.get_items(), key=lambda item: item.status, reverse=True)
-        view_model = ViewModel(sorted_items)
+        view_model = ViewModel(client.get_items())
         return render_template('index.html', view_model=view_model)
 
 

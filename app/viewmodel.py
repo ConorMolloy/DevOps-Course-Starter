@@ -8,7 +8,7 @@ class ViewModel:
 
     @property
     def items(self):
-        return self._items
+        return sorted(self._items, key=lambda item: item.status, reverse=True)
 
     @property
     def to_do(self):
