@@ -9,7 +9,7 @@ class TrelloClient:
     
     def __init__(self):
         self.config: Config = Config()
-        self.base_request_url = 'https://api.trello.com/1/boards/'+self.config.boardId+'/'
+        self.base_request_url = 'https://api.trello.com/1/boards/'+self.config.board_id+'/'
         self.request_credentials = f'?key={self.config.key}&token={self.config.token}'
 
     def get_items(self) -> list:
