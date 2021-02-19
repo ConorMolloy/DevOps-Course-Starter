@@ -4,9 +4,9 @@ import os
 
 class Config:
     def __init__(self):
-        self._boardId = os.environ.get('boardId')
-        self._key = os.environ.get('key')
-        self._token = os.environ.get('token')
+        self._boardId = os.environ.get('BOARD_ID')
+        self._key = os.environ.get('KEY')
+        self._token = os.environ.get('TOKEN')
 
     @property
     def boardId(self) -> str:
