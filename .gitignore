@@ -120,3 +120,4 @@ env/
 .vagrant
 pytestdebug.log
 geckodriver.log
+geckodriver.exe
