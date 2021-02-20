@@ -118,3 +118,6 @@ env/
 .vscode/
 .venv
 .vagrant
+pytestdebug.log
+geckodriver.log
+geckodriver.exe
