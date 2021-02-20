@@ -46,7 +46,7 @@ You should see output similar to the following:
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
 
 # Running Tests
-All tests can be run with pytest using the following commands
+All tests can be run with pytest using the following commands, Firefox and the correct version of geckodriver.exe will be needed for the e2e test
 ```bash
 poetry run pytest test
 ```
