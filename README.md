@@ -50,3 +50,21 @@ All tests can be run with pytest using the following commands, Firefox and the c
 ```bash
 poetry run pytest test
 ```
+
+# Running in Docker
+For this you will need docker installed on your machine.
+
+To build and run a development docker container that will automatically update, run the fillowing commands
+```bash
+docker build --target development --tag todo-app:dev .
+docker-compose up   
+```
+
+To build a production ready container using gunicorn instead of the dev server, run the following command
+```bash
+docker build --target production --tag todo-app:prod .    
+```
+In order for this to work as expected you will need to inject the .env file when you run the container
+```bash
+docker run -p 5000:5000 --env-file .env todo-app:prod
+```

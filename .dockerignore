@@ -1,0 +1,7 @@
+.env
+.env.template
+.vscode
+.gitignore
+README.md
+Vagrantfile
+.venv
