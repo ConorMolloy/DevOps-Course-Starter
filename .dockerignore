@@ -2,4 +2,6 @@
 .env.template
 .vscode
 .gitignore
-README.md  
+README.md
+Vagrantfile
+.venv
