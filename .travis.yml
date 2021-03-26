@@ -1,2 +1,3 @@
 script:
 - echo "Hello World!"
+- docker build --target test --tag test-image .
