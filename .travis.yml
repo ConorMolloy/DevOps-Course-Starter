@@ -3,4 +3,4 @@ services:
 
 script:
 - docker build --target test --tag test-image .
-- docker run test-image test
+- docker run -e BOARD_ID=BOARD_ID -e KEY=KEY -e TOKEN=TOKEN test-image test
