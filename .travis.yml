@@ -1,3 +1,6 @@
+services:
+  - docker
+
 script:
 - docker build --target test --tag test-image .
 - docker run test-image test
