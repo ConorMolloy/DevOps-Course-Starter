@@ -1,8 +1,10 @@
 services:
-  - docker
-
+- docker
 script:
 - docker build --target test --tag test-image .
 - docker run test-image test/unit
 - docker run test-image test/integration
 - docker run -e BOARD_ID -e KEY -e TOKEN test-image test/e2e
+notifications:
+  slack:
+    secure: ngugQw6OQv7E+xFYHlVg73l3hpRvJS7tH3gpriQ4GRhpGPmzb791A/AgTRZayPVmq07mxt5qkHq+e+Tti9DPO0+aQDHz9LrRBv1FtttKPA3z207bq3FuBzegVAQ/jUCzdN7FW/2rs/St8veQkH7h3bHDZRDSMLxaRH/eBEu/lRWhL/o5sSvS8M71ceuoQFKeXM/2BmE/5Xtgx7RrDnMbDQ9y/NqbcMn5xEJQQCx6ccGgxq+pKhK/w3060ea1paRuavuccMxnEMEar7yt4rk1w2CYJ1pwqrvu3soc1SrKOOCWZ8+gImdZ1WVZ7TFf9l12UNLU1Mkg9Lucj4MgNPXC3qHxX67oyPpV+Jxe6LDCK/XOdTSisC0Qn68enqw2mH+DePzJ8kq6umfyCHTj4NMlUj1NaT8FaJrUa8UWXXVvc5aCZIWzFO3yA6mpFU5CDAgT31NazhH5lwkMZqmfc88gKVq+JROayZOLzJdB4U9HV7Qe0/bFMQ8GPp/9B2IKHxuegGilbfdedkhTk5ad2wAAMSvbApoHvp8P86dv8MSaaa+bAOyWXrtX2c0Bz56ZEQ2aaGSKdo7PDEgC7fti0W8XN1YeLQ/ZCseq/tYDVgtQHDMoCW0EQtWrsEYH88ewLz+sNqQi6ekIPnxE+V6Gp74aDQngCEL62wLvjUQJomAtCW4=
