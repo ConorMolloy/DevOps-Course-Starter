@@ -5,6 +5,7 @@ import time
 from selenium import webdriver
 from threading import Thread
 from dotenv import find_dotenv, load_dotenv
+from selenium.webdriver.firefox.options import Options
 
 @pytest.fixture(scope='module')
 def test_app():
@@ -24,7 +25,9 @@ def test_app():
     
 @pytest.fixture(scope="module")
 def driver():
-    with webdriver.Firefox() as driver:
+    options = Options()
+    options.headless =  True
+    with webdriver.Firefox(options=options) as driver:
         yield driver
 
 def test_task_journey(driver, test_app): 
