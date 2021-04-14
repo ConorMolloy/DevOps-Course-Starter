@@ -68,3 +68,17 @@ In order for this to work as expected you will need to inject the .env file when
 ```bash
 docker run -p 5000:5000 --env-file .env todo-app:prod
 ```
+
+# Running the tests in Docker
+To run the applications tests inside a docker container (what Travis does in the build pipleline) run 
+```bash
+docker build --target test --tag test-image .
+```
+to build the test container with all the dependencies, including a version of Firefox
+
+To run the tests, unit, integration and e2e run the following
+```bash
+docker run test-image test/unit
+docker run test-image test/integration
+docker run --env-file .env test-image test/e2e
+```
