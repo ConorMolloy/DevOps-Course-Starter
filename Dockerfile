@@ -11,6 +11,7 @@ RUN poetry install --no-root
 COPY . /app
 
 FROM base as production
+ENV PORT 5000
 ENTRYPOINT 'poetry run gunicorn -w 4 -b 0.0.0.0:$PORT "run:app"'
 
 FROM base as development
