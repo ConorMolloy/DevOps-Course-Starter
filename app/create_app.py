@@ -2,9 +2,9 @@ from flask import Flask, render_template, request, redirect
 from app.trello_client import TrelloClient
 from app.viewmodel import ViewModel
 
-def create_app():
+def create_app(config):
     app = Flask(__name__)
-    app.config.from_object('app.flask_config.Config')
+    app.config.from_object(config)
     client = TrelloClient()
 
     @app.route('/', methods=['GET'])

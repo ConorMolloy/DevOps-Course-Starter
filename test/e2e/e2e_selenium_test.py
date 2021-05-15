@@ -6,13 +6,14 @@ from selenium import webdriver
 from threading import Thread
 from dotenv import find_dotenv, load_dotenv
 from selenium.webdriver.firefox.options import Options
+from app.flask_config import Config
 
 @pytest.fixture(scope='module')
 def test_app():
     # construct the new application
     file_path = find_dotenv('.env')
     load_dotenv(file_path, override=True)
-    application = create_app()
+    application = create_app(Config)
 
     # start the app in its own thread.
     thread = Thread(target=lambda: application.run(use_reloader=False)) 
