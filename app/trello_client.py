@@ -42,7 +42,7 @@ class TrelloClient:
         Returns:
             item: The saved item, or None if no items match the specified ID.
         """
-        items = TrelloClient.get_lists()
+        items = self.get_lists()
         return next((item for item in items if item['id'] == int(id)), None)
 
 
