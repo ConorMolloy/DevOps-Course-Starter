@@ -3,7 +3,7 @@ from typing import List
 from app.to_do_item import ToDoItem
 
 class ViewModel:
-    def __init__(self, items):
+    def __init__(self, items:List[ToDoItem]):
         self._items = items
 
     @property

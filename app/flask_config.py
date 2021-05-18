@@ -4,18 +4,18 @@ import os
 
 class Config:
     def __init__(self):
-        self._board_id = os.environ.get('BOARD_ID')
-        self._key = os.environ.get('KEY')
-        self._token = os.environ.get('TOKEN')
+        self._db_url = os.environ.get('DB_URL')
+        self._db_name = os.environ.get('DB_NAME')
+        self._todo_collection_name = os.environ.get('TODO_COLLECTION_NAME')
 
     @property
-    def board_id(self) -> str:
-        return self._board_id
+    def db_url(self) -> str:
+        return self._db_url
+
+    @property 
+    def todo_collection_name(self) -> str:
+        return self._todo_collection_name
 
     @property
-    def key(self) -> str:
-        return self._key
-
-    @property
-    def token(self) -> str:
-        return self._token
+    def db_name(self) -> str:
+        return self._db_name

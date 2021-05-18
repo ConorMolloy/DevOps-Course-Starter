@@ -1,23 +1,25 @@
-from typing import List
 from app.viewmodel import ViewModel
 from app.to_do_item import ToDoItem
 from datetime import datetime, timedelta
 
 class TestViewModel:
     def test_items(self):
-        first_item = ToDoItem("1234", "To Do", "First Test Item", '2021-01-06T21:14:06.518Z')
-        second_item = ToDoItem("4321", "Doing", "In progress Item", '2021-01-06T21:14:06.518Z')
+        first_item = ToDoItem("1234", "First Test Item", "To Do", '2021-01-06 21:14:06.518')
+        second_item = ToDoItem("4321", "In progress Item", "Doing", '2021-01-06 21:14:06.518')
 
         item_list = [first_item, second_item]
-
         view_model_under_test = ViewModel(item_list)
 
-        assert view_model_under_test.items == item_list
+        diff = set(item_list) ^ set(view_model_under_test.items)
+
+        assert len(item_list) == len(view_model_under_test.items)
+        
+        assert not diff
 
     def test_to_do(self):
-        first_item = ToDoItem("1234", "To Do", "First Test Item", '2021-01-06T21:14:06.518Z')
-        second_item = ToDoItem("4321", "Doing", "In progress Item", '2021-01-06T21:14:06.518Z')
-        third_item = ToDoItem("1111", "Done", "I hope this test passes", '2021-01-06T21:14:06.518Z')
+        first_item = ToDoItem("1234", "First Test Item", "To Do", '2021-01-06 21:14:06.518')
+        second_item = ToDoItem("4321", "In progress Item", "Doing", '2021-01-06 21:14:06.518')
+        third_item = ToDoItem("1111", "I hope this test passes", "Done", '2021-01-06 21:14:06.518')
 
         item_list = [first_item, second_item, third_item]
 
@@ -26,9 +28,9 @@ class TestViewModel:
         assert view_model_under_test.to_do == [first_item]
 
     def test_doing(self):
-        first_item = ToDoItem("1234", "To Do", "First Test Item", '2021-01-06T21:14:06.518Z')
-        second_item = ToDoItem("4321", "Doing", "In progress Item", '2021-01-06T21:14:06.518Z')
-        third_item = ToDoItem("1111", "Done", "I hope this test passes", '2021-01-06T21:14:06.518Z')
+        first_item = ToDoItem("1234", "First Test Item", "To Do", '2021-01-06T21:14:06.518Z')
+        second_item = ToDoItem("4321", "In progress Item", "Doing", '2021-01-06T21:14:06.518Z')
+        third_item = ToDoItem("1111", "I hope this test passes", "Done", '2021-01-06T21:14:06.518Z')
 
         item_list = [first_item, second_item, third_item]
 
@@ -37,9 +39,9 @@ class TestViewModel:
         assert view_model_under_test.doing == [second_item]
 
     def test_done(self):
-        first_item = ToDoItem("1234", "To Do", "First Test Item", '2021-01-06T21:14:06.518Z')
-        second_item = ToDoItem("4321", "Doing", "In progress Item", '2021-01-06T21:14:06.518Z')
-        third_item = ToDoItem("1111", "Done", "I hope this test passes", '2021-01-06T21:14:06.518Z')
+        first_item = ToDoItem("1234", "First Test Item", "To Do", '2021-01-06T21:14:06.518Z')
+        second_item = ToDoItem("4321", "In progress Item", "Doing", '2021-01-06T21:14:06.518Z')
+        third_item = ToDoItem("1111", "I hope this test passes", "Done", '2021-01-06T21:14:06.518Z')
 
         item_list = [first_item, second_item, third_item]
 
@@ -51,12 +53,12 @@ class TestViewModel:
         today = datetime.now()
         yesterday = datetime.now() + timedelta(days=-1)
 
-        one = ToDoItem("1", "Done", "One", today)
-        two = ToDoItem("2", "Done", "One", today)
-        three = ToDoItem("3", "Done", "One", yesterday)
-        four = ToDoItem("4", "Done", "One", yesterday)
-        five = ToDoItem("5", "Done", "One", yesterday)
-        six = ToDoItem("6", "Done", "One", yesterday)
+        one = ToDoItem("1", "One", "Done", today)
+        two = ToDoItem("2", "One", "Done", today)
+        three = ToDoItem("3", "One", "Done", yesterday)
+        four = ToDoItem("4", "One", "Done", yesterday)
+        five = ToDoItem("5", "One", "Done", yesterday)
+        six = ToDoItem("6", "One", "Done", yesterday)
 
         item_list = [one, two, three, four, five, six]
 
@@ -68,10 +70,10 @@ class TestViewModel:
         today = datetime.now()
         yesterday = datetime.now() + timedelta(days=-1)
 
-        one = ToDoItem("1", "Done", "One", today)
-        two = ToDoItem("2", "Done", "One", today)
-        three = ToDoItem("3", "Done", "One", yesterday)
-        four = ToDoItem("4", "Done", "One", yesterday)
+        one = ToDoItem("1", "One", "Done", today)
+        two = ToDoItem("2", "One", "Done", today)
+        three = ToDoItem("3", "One", "Done", yesterday)
+        four = ToDoItem("4", "One", "Done", yesterday)
 
         item_list = [one, two, three, four]
 
@@ -84,9 +86,9 @@ class TestViewModel:
         tomorrow = today + timedelta(days=1)
         yesterday = today + timedelta(days=-1)
 
-        first_item = ToDoItem("1234", "Done", "First Test Item", yesterday)
-        second_item = ToDoItem("4321", "Done", "In progress Item", today)
-        third_item = ToDoItem("1111", "Done", "I hope this test passes", tomorrow)
+        first_item = ToDoItem("1234", "First Test Item", "Done", yesterday)
+        second_item = ToDoItem("4321", "In progress Item", "Done", today)
+        third_item = ToDoItem("1111", "I hope this test passes", "Done", tomorrow)
 
         item_list = [first_item, second_item, third_item]
 
@@ -97,9 +99,9 @@ class TestViewModel:
         today = datetime.now()
         yesterday = today + timedelta(days=-1)
 
-        first_item = ToDoItem("1234", "Done", "First Test Item", yesterday)
-        second_item = ToDoItem("4321", "Done", "In progress Item", today)
-        third_item = ToDoItem("1111", "Done", "I hope this test passes", yesterday)
+        first_item = ToDoItem("1234", "First Test Item", "Done", yesterday)
+        second_item = ToDoItem("4321", "In progress Item", "Done", today)
+        third_item = ToDoItem("1111", "I hope this test passes", "Done", yesterday)
 
         item_list = [first_item, second_item, third_item]
 
