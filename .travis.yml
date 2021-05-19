@@ -7,12 +7,12 @@ script:
 - docker build --target test --tag test-image .
 - docker run test-image test/unit
 - docker run test-image test/integration
-- docker run -e BOARD_ID -e KEY -e TOKEN test-image test/e2e
+- docker run -e DB_URL -e DB_NAME -e TEST_COLLECTION test-image test/e2e
 deploy:
   provider: script
   script: bash scripts/deploy.sh
   on:
-    branch: master
+    branch: main
 
 notifications:
   slack:
