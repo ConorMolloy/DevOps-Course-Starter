@@ -1,5 +1,5 @@
 import pytest
-import pymongo
+import mongomock
 from dotenv import find_dotenv, load_dotenv
 from app.flask_config import Config
 from app.atlas_client import AtlasClient
@@ -10,15 +10,14 @@ import os
 
 @pytest.fixture
 def atlas_client() -> AtlasClient:
-    file_path = find_dotenv('.env')
+    file_path = find_dotenv('.env.test')
     load_dotenv(file_path, override=True)
 
     app_config = Config()
-    app_config._todo_collection_name = os.environ.get('TEST_COLLECTION')
-    db_client = pymongo.MongoClient(f"{app_config.db_url}")
-    db = db_client[f"{app_config.db_name}"]
-    
-    return AtlasClient(db, app_config)
+
+    mocked_db = mongomock.MongoClient().get_database("db")
+
+    return AtlasClient(mocked_db, app_config)
 
 def test_get_items_returns_list_of_all_items_in_collection(atlas_client):
     items = [ToDoItem.new_item_as_dict("First Post"), ToDoItem.new_item_as_dict("Second Post")]
