@@ -9,6 +9,7 @@ from threading import Thread
 from dotenv import find_dotenv, load_dotenv
 from selenium.webdriver.firefox.options import Options
 import pymongo
+import os
 
 @pytest.fixture(scope='module')
 def test_app():
@@ -17,6 +18,7 @@ def test_app():
     load_dotenv(file_path, override=True)
 
     app_config = Config()
+    app_config._todo_collection_name = os.environ.get('TEST_COLLECTION')
     db_client = pymongo.MongoClient(f"{app_config.db_url}")
     db = db_client[f"{app_config.db_name}"]
     client = AtlasClient(db, app_config)
