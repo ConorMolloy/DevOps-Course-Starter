@@ -2,6 +2,7 @@ import pytest
 from requests.models import Response
 from app.create_app import create_app
 from app.to_do_item import ToDoItem
+from app.atlas_client import AtlasClient
 from dotenv import find_dotenv, load_dotenv
 from unittest.mock import Mock, patch
 from app.flask_config import Config
@@ -14,9 +15,10 @@ def test_index_page():
     app_config = Config()
 
     mocked_db = mongomock.MongoClient().get_database("db")
+    client = AtlasClient(mocked_db, app_config)
 
     #Create the new app.
-    test_app = create_app(mocked_db, app_config)
+    test_app = create_app(client, app_config)
 
     mock_item_response = ToDoItem.new_item_as_dict("Hello form the integration tests")
     

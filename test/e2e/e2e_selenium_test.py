@@ -1,12 +1,13 @@
 from datetime import time
 import pytest
 from app.create_app import create_app
+from app.flask_config import Config
+from app.atlas_client import AtlasClient
 import time
 from selenium import webdriver
 from threading import Thread
 from dotenv import find_dotenv, load_dotenv
 from selenium.webdriver.firefox.options import Options
-from app.flask_config import Config
 import pymongo
 
 @pytest.fixture(scope='module')
@@ -18,8 +19,9 @@ def test_app():
     app_config = Config()
     db_client = pymongo.MongoClient(f"{app_config.db_url}")
     db = db_client[f"{app_config.db_name}"]
+    client = AtlasClient(db, app_config)
 
-    application = create_app(db, app_config)
+    application = create_app(client, app_config)
 
     # start the app in its own thread.
     thread = Thread(target=lambda: application.run(use_reloader=False)) 
