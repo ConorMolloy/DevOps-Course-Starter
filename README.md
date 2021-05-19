@@ -23,9 +23,11 @@ The `.env` file is used by flask to set environment variables when running ` fla
 
 In order to run this application you will require the appropriate trello information in the `.env` file. They are as follows
 ```
-boardId=<your_board_id>
-key=<your_key>
-token=<your_token>
+DB_URL=<url to your atlas cluster>
+DB_NAME=<db name>
+TODO_COLLECTION_NAME=<collection name>
+
+TEST_COLLECTION=<another collection for e2e tests>
 ```
 
 Once the setup script has completed and all packages have been installed, start the Flask app by running:
