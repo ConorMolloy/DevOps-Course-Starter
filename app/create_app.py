@@ -2,9 +2,10 @@ from flask import Flask, render_template, request, redirect
 from app.viewmodel import ViewModel
 from app.atlas_client import AtlasClient
 from app.flask_config import Config
+from app.client_interface import ClientInterface
 from pymongo.database import Database
 
-def create_app(client: AtlasClient, config: Config):
+def create_app(client: ClientInterface, config: Config):
     app = Flask(__name__)
     app.config.from_object(config)
 

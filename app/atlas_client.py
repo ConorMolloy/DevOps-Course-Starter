@@ -1,12 +1,13 @@
 from app.to_do_item import ToDoItem
 from app.flask_config import Config
+from app.client_interface import ClientInterface
 from bson.objectid import ObjectId 
 from datetime import datetime
 from pymongo.collection import ReturnDocument
 from pymongo.database import Database
 from typing import List
 
-class AtlasClient:
+class AtlasClient(ClientInterface):
     def __init__(self, db: Database, config: Config):
         self._db = db
         self._collection = db[f'{config.todo_collection_name}']
