@@ -1,13 +1,15 @@
 FROM python:3.9.5 as base
 
-ENV PATH /usr/local/bin:$PATH
-ENV VIRTUAL_ENV "/venv"
-RUN python -m venv $VIRTUAL_ENV
-ENV PATH "$VIRTUAL_ENV/bin:$PATH"
+RUN mkdir /app 
 WORKDIR /app
+
+ENV POETRY_HOME=/poetry
+ENV PATH=${POETRY_HOME}/bin:${PATH}
+
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-COPY poetry.lock pyproject.toml /app/
-RUN poetry install --no-root
+COPY pyproject.toml /app/
+RUN poetry config virtualenvs.create false && \
+    poetry install
 COPY . /app
 
 FROM base as production

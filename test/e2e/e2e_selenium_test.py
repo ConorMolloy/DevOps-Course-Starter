@@ -14,8 +14,11 @@ import os
 @pytest.fixture(scope='module')
 def test_app():
     # construct the new application
-    file_path = find_dotenv('.env')
-    load_dotenv(file_path, override=True)
+    try:
+        file_path = find_dotenv('.env')
+        load_dotenv(file_path, override=True)
+    except:
+        print("Could not find .env")
 
     app_config = Config()
     app_config._todo_collection_name = os.environ.get('TEST_COLLECTION')

@@ -9,7 +9,7 @@ from app.flask_config import Config
 import mongomock
 
 def test_index_page():
-    file_path = find_dotenv('.env.test')
+    file_path = find_dotenv('.env.test', usecwd=True)
     load_dotenv(file_path, override=True)
 
     app_config = Config()

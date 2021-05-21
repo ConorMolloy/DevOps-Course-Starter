@@ -10,7 +10,7 @@ import os
 
 @pytest.fixture
 def atlas_client() -> AtlasClient:
-    file_path = find_dotenv('.env.test')
+    file_path = find_dotenv('.env.test', usecwd=True)
     load_dotenv(file_path, override=True)
 
     app_config = Config()
