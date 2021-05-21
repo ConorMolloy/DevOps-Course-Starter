@@ -1,11 +1,11 @@
-FROM python:3.7.9-slim-buster as base
+FROM python:3.9.5 as base
 
 ENV PATH /usr/local/bin:$PATH
 ENV VIRTUAL_ENV "/venv"
 RUN python -m venv $VIRTUAL_ENV
 ENV PATH "$VIRTUAL_ENV/bin:$PATH"
 WORKDIR /app
-RUN pip install poetry
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 COPY poetry.lock pyproject.toml /app/
 RUN poetry install --no-root
 COPY . /app
