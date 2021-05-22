@@ -22,7 +22,7 @@ def test_app():
 
     app_config = Config()
     app_config._todo_collection_name = os.environ.get('TEST_COLLECTION')
-    db_client = pymongo.MongoClient(f"{app_config.db_url}")
+    db_client = pymongo.MongoClient(f"{app_config.db_url}", connect=False)
     db = db_client[f"{app_config.db_name}"]
     client = AtlasClient(db, app_config)
 
@@ -47,7 +47,7 @@ def driver():
 def test_task_journey(driver, test_app): 
     test_item_name = 'Finish selenium test'
     # this is to stop a connection issue that was causing intermittant failures
-    driver.implicitly_wait(10)
+    time.sleep(5)
     driver.get('http://localhost:5000/')
     driver.implicitly_wait(10)
     driver.find_element_by_id('item').send_keys(test_item_name)
