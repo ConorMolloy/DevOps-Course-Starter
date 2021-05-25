@@ -6,18 +6,20 @@ RUN python -m venv $VIRTUAL_ENV
 ENV PATH "$VIRTUAL_ENV/bin:$PATH"
 WORKDIR /app
 RUN pip install poetry
-EXPOSE 5000
 COPY poetry.lock pyproject.toml /app/
 RUN poetry install --no-root
 COPY . /app
 
 FROM base as production
-ENTRYPOINT poetry run gunicorn -w 4 -b 0.0.0.0:5000 run:app
+ENV PORT 5000
+ENTRYPOINT ["/bin/bash", "scripts/prod-entrypoint.sh"]
 
 FROM base as development
+EXPOSE 5000
 ENTRYPOINT poetry run flask run --host=0.0.0.0
 
 FROM base as test
+EXPOSE 5000
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update \
   && apt-get install --no-install-recommends --no-install-suggests --assume-yes \
   curl \
