@@ -84,3 +84,6 @@ docker run test-image test/unit
 docker run test-image test/integration
 docker run --env-file .env test-image test/e2e
 ```
+
+# Deployment Pipeline
+When a PR is merged on this project the changes will be deployed to Heroku (https://devops-starter.herokuapp.com/) and a copy of the image will be pushed to DockerHub (https://hub.docker.com/repository/docker/mertmanable/todo-app)
