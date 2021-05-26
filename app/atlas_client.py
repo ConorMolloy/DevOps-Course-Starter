@@ -10,7 +10,7 @@ from typing import List
 class AtlasClient(ClientInterface):
     def __init__(self, db: Database, config: Config):
         self._db = db
-        self._collection = db[f'{config.todo_collection_name}']
+        self._collection = db[config.todo_collection_name]
 
     def get_items(self) -> List[ToDoItem]:
         return list(map(lambda doc: ToDoItem(str(doc["_id"]), doc["title"], doc["status"], doc["last_modified"]), list(self._collection.find())))
