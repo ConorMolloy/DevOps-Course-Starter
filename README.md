@@ -21,7 +21,7 @@ $ cp .env.template .env # (first time only)
 
 The `.env` file is used by flask to set environment variables when running ` flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). 
 
-In order to run this application you will require the appropriate trello information in the `.env` file. They are as follows
+In order to run this application you will require the appropriate Mongo information in the `.env` file. They are as follows
 ```
 DB_URL=<url to your atlas cluster>
 DB_NAME=<db name>
