@@ -1,11 +1,14 @@
 from datetime import datetime
+from typing import Type, TypeVar
+
+T = TypeVar('T', bound='ToDoItem')
 
 class ToDoItem(object):
-    def __init__(self, id: str, title: str, status: str, last_modified: datetime):
+    def __init__(self, id: str, title: str, status: str, last_modified: str):
         self._id = id
         self._status = status
         self._title = title
-        self._last_modified = last_modified
+        self._last_modified = datetime.strptime(last_modified, '%Y-%m-%d %H:%M:%S.%f')
 
     @property
     def id(self) -> str:
@@ -33,4 +36,7 @@ class ToDoItem(object):
             "status": "To Do",
             "last_modified": str(datetime.now())
         }
-        
+
+    @classmethod
+    def from_json(cls: Type[T], incoming_object: object) -> T:
+        return cls(str(incoming_object["_id"]), incoming_object["title"], incoming_object["status"], incoming_object["last_modified"])

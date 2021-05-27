@@ -25,6 +25,7 @@ def test_app():
     db_client = pymongo.MongoClient(f"{app_config.db_url}", connect=False)
     db = db_client[f"{app_config.db_name}"]
     client = AtlasClient(db, app_config)
+    client._collection.delete_many({})
 
     application = create_app(client, app_config)
 
@@ -49,14 +50,10 @@ def test_task_journey(driver, test_app):
     # this is to stop a connection issue that was causing intermittant failures
     time.sleep(3)
     driver.get('http://localhost:5000/')
-    driver.implicitly_wait(2)
     assert 'To-Do App' in driver.title
     driver.find_element_by_id('item').send_keys(test_item_name)
-    driver.implicitly_wait(2)
     driver.find_element_by_id('submit').click()
-    driver.implicitly_wait(2)
     driver.find_element_by_id(test_item_name+'_complete').click()
-    driver.implicitly_wait(2)
     driver.find_element_by_id(test_item_name+'_delete').click()
 
     assert test_item_name not in driver.page_source
