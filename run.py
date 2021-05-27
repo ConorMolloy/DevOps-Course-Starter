@@ -4,8 +4,8 @@ from app.atlas_client import AtlasClient
 import pymongo
 
 app_config = Config()
-client = pymongo.MongoClient(f"{app_config.db_url}")
-db = client[f'{app_config.db_name}']
+client = pymongo.MongoClient(app_config.db_url)
+db = client[app_config.db_name]
 atlas_client = AtlasClient(db, app_config)
 
 app = create_app(atlas_client, app_config)
