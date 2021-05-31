@@ -25,7 +25,7 @@ class TestToDoItem:
 
         object_to_test: ToDoItem = ToDoItem.from_json(returned_object)
 
-        assert isinstance(object_to_test.id, str)
+        assert isinstance(object_to_test.item_id, str)
         assert "Testing static constructor method" == object_to_test.title
         assert "To Do" == object_to_test.status
         assert isinstance(object_to_test.last_modified, datetime)
