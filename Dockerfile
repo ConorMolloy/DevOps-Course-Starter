@@ -1,24 +1,28 @@
-FROM python:3.7.9-slim-buster as base
+FROM python:3.9.5 as base
 
-ENV PATH /usr/local/bin:$PATH
-ENV VIRTUAL_ENV "/venv"
-RUN python -m venv $VIRTUAL_ENV
-ENV PATH "$VIRTUAL_ENV/bin:$PATH"
-WORKDIR /app
 RUN pip install poetry
-COPY poetry.lock pyproject.toml /app/
-RUN poetry install --no-root
-COPY . /app
+WORKDIR /code
+COPY poetry.lock pyproject.toml /code/
 
 FROM base as production
+RUN poetry config virtualenvs.create false && \
+    poetry install --no-dev
+COPY . /code
 ENV PORT 5000
-ENTRYPOINT ["/bin/bash", "scripts/prod-entrypoint.sh"]
+RUN chmod +x scripts/prod-entrypoint.sh
+ENTRYPOINT ["scripts/prod-entrypoint.sh"]
 
 FROM base as development
+RUN poetry config virtualenvs.create false && \
+    poetry install --no-root
+COPY . /code
 EXPOSE 5000
-ENTRYPOINT poetry run flask run --host=0.0.0.0
+ENTRYPOINT ["poetry", "run", "flask", "run", "-h", "0.0.0.0"]
 
 FROM base as test
+RUN poetry config virtualenvs.create false && \
+    poetry install --no-root
+COPY . /code
 EXPOSE 5000
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update \
   && apt-get install --no-install-recommends --no-install-suggests --assume-yes \

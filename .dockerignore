@@ -9,3 +9,5 @@ __pycache__
 /test/__pycache__
 geckodriver.exe
 geckodriver.log
+Dockerfile
+docker-compose.yml
