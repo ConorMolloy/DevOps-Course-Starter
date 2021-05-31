@@ -24,11 +24,11 @@
               <table>
                 {% if item.status == 'To Do' %}
                   <tr>
-                    <form class="completed" action="/update/{{item.id}}" method="POST"><input type="submit" value="Complete" id="{{item.title}}_complete"></form>
+                    <form class="completed" action="/update/{{item.item_id}}" method="POST"><input type="submit" value="Complete" id="{{item.title}}_complete"></form>
                   </tr>
                 {% endif %}
                 <tr>
-                  <form class="remove" action="/delete/{{item.id}}"><input type="submit" value="Delete" id="{{item.title}}_delete"></form>
+                  <form class="remove" action="/delete/{{item.item_id}}"><input type="submit" value="Delete" id="{{item.title}}_delete"></form>
                 </tr>
               </table>
             </li>
