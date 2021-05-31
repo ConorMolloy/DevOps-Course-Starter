@@ -1,7 +1,8 @@
+"""Entry point for Flask"""
+import pymongo
 from app.create_app import create_app
 from app.flask_config import Config
 from app.atlas_client import AtlasClient
-import pymongo
 
 app_config = Config()
 client = pymongo.MongoClient(app_config.db_url)
