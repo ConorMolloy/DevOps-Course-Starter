@@ -6,6 +6,8 @@ before_install:
 script:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 - docker build --target test --tag test-image .
+- docker run --entrypoint poetry test-image run pylint run.py
+- docker run --entrypoint poetry test-image run pylint /code/app 
 - docker run test-image test/unit
 - docker run test-image test/integration
 - docker run -e DB_URL -e DB_NAME -e TEST_COLLECTION test-image test/e2e
