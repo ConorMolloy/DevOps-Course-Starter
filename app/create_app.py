@@ -7,6 +7,7 @@ from app.user import User
 from flask_login import LoginManager, login_required, login_user
 from oauthlib.oauth2 import WebApplicationClient
 import requests
+from uuid import uuid4
 
 def create_app(client: ClientInterface, config: Config):
     """
@@ -22,11 +23,13 @@ def create_app(client: ClientInterface, config: Config):
     login_manager.init_app(app)
 
     web_application_client = WebApplicationClient(config.client_id)
+    state = ''
 
     @login_manager.unauthorized_handler
     def unauthenticated():
-        #TODO Add state parameter to this request. uuid4?
-        return redirect(web_application_client.prepare_request_uri('https://github.com/login/oauth/authorize'))
+        state = uuid4
+        return redirect(web_application_client.prepare_request_uri('https://github.com/login/oauth/authorize',
+                                                                    state=state))
 
     @app.route('/login')
     def login_callback():
@@ -34,7 +37,8 @@ def create_app(client: ClientInterface, config: Config):
         url, _, body = web_application_client.prepare_token_request('https://github.com/login/oauth/access_token', 
                                                                     client_id=config.client_id, 
                                                                     client_secret=config.client_secret,
-                                                                    code=auth_code)
+                                                                    code=auth_code,
+                                                                    state=state)
 
         token_headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
