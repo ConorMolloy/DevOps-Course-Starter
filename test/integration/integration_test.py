@@ -19,6 +19,7 @@ def test_index_page():
 
     #Create the new app.
     test_app = create_app(client, app_config)
+    test_app.config['LOGIN_DISABLED'] = True
 
     mock_item_response = ToDoItem.new_item_as_dict("Hello form the integration tests")
     

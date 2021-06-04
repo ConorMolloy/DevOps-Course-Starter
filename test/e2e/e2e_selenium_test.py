@@ -28,6 +28,7 @@ def test_app():
     client._collection.delete_many({})
 
     application = create_app(client, app_config)
+    application.config['LOGIN_DISABLED'] = True
 
     # start the app in its own thread.
     thread = Thread(target=lambda: application.run(use_reloader=False)) 
