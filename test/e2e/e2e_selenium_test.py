@@ -1,5 +1,6 @@
 from datetime import time
 import pytest
+from flask_login import LoginManager, AnonymousUserMixin
 from unittest.mock import patch
 from app.create_app import create_app
 from app.flask_config import Config
@@ -12,6 +13,10 @@ from dotenv import find_dotenv, load_dotenv
 from selenium.webdriver.firefox.options import Options
 import pymongo
 import os
+
+class TestUser(AnonymousUserMixin):
+    id = None
+    role = Role.WRITER.value
 
 @pytest.fixture(scope='module')
 def test_app():
@@ -28,8 +33,10 @@ def test_app():
     db = db_client[f"{app_config.db_name}"]
     client = AtlasClient(db, app_config)
     client._collection.delete_many({})
+    login_manager = LoginManager()
+    login_manager.anonymous_user = TestUser
 
-    application = create_app(client, app_config)
+    application = create_app(client, app_config, login_manager)
     application.config['LOGIN_DISABLED'] = True
 
     # start the app in its own thread.
@@ -48,10 +55,7 @@ def driver():
     with webdriver.Firefox(options=options) as driver:
         yield driver
 
-@patch('app.create_app.current_user')
-def test_task_journey(mock_get_user, driver, test_app):
-    mock_get_user.role = Role.WRITER.value
-
+def test_task_journey(driver, test_app):
     test_item_name = 'Finish selenium test'
     # this is to stop a connection issue that was causing intermittant failures
     time.sleep(3)

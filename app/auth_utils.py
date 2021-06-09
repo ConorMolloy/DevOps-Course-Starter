@@ -12,7 +12,7 @@ def authorized_for(role: str):
     def autherize(func):
         @wraps(func)
         def decorated_view(*args, **kwargs):
-            if current_app.config.get('LOGIN_DISABLED') or current_user.role == role:
+            if current_user.role == role:
                 return func(*args, **kwargs)
             return abort(401)
         return decorated_view

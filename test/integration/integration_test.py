@@ -1,4 +1,5 @@
 import pytest
+from flask_login import LoginManager
 from requests.models import Response
 from app.create_app import create_app
 from app.to_do_item import ToDoItem
@@ -16,9 +17,10 @@ def test_index_page():
 
     mocked_db = mongomock.MongoClient().get_database("db")
     client = AtlasClient(mocked_db, app_config)
+    login_manager = LoginManager()
 
     #Create the new app.
-    test_app = create_app(client, app_config)
+    test_app = create_app(client, app_config, login_manager)
     test_app.config['LOGIN_DISABLED'] = True
 
     mock_item_response = ToDoItem.new_item_as_dict("Hello form the integration tests")

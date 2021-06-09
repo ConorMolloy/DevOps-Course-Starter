@@ -11,7 +11,7 @@ from app.user import User
 from app.auth_utils import authorized_for
 from app.role import Role
 
-def create_app(client: ClientInterface, config: Config):
+def create_app(client: ClientInterface, config: Config, login_manager: LoginManager):
     """
     Args:
         client (ClientInterface):
@@ -21,7 +21,6 @@ def create_app(client: ClientInterface, config: Config):
     app = Flask(__name__)
     app.config.from_object(FlaskConfig())
 
-    login_manager = LoginManager()
     login_manager.init_app(app)
 
     web_application_client = WebApplicationClient(config.client_id)
