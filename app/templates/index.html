@@ -8,10 +8,12 @@
   </div>
 
   <div class="input">
-    <form action="/" method="POST">
-      <input type="text" name="item" id="item" required>
-      <button type="submit" id="submit">Add Item</button>
-    </form>
+    {% if view_model.user.role == 'writer' %}
+      <form action="/" method="POST">
+        <input type="text" name="item" id="item" required>
+        <button type="submit" id="submit">Add Item</button>
+      </form>
+    {% endif %}
   </div>
 
   <div class="row">
@@ -20,17 +22,19 @@
       <ul class="list-group-item">
         <!-- List the todo items here -->
           {% for item in view_model.items %}
-            <li>{{ item.title }} - {{item.status}} 
-              <table>
-                {% if item.status == 'To Do' %}
+            <li>{{ item.title }} - {{item.status}}
+              {% if view_model.user.role == 'writer' %} 
+                <table>
+                  {% if item.status == 'To Do' %}
+                    <tr>
+                      <form class="completed" action="/update/{{item.item_id}}" method="POST"><input type="submit" value="Complete" id="{{item.title}}_complete"></form>
+                    </tr>
+                  {% endif %}
                   <tr>
-                    <form class="completed" action="/update/{{item.item_id}}" method="POST"><input type="submit" value="Complete" id="{{item.title}}_complete"></form>
+                    <form class="remove" action="/delete/{{item.item_id}}"><input type="submit" value="Delete" id="{{item.title}}_delete"></form>
                   </tr>
-                {% endif %}
-                <tr>
-                  <form class="remove" action="/delete/{{item.item_id}}"><input type="submit" value="Delete" id="{{item.title}}_delete"></form>
-                </tr>
-              </table>
+                </table>
+              {% endif %}
             </li>
           {% endfor %}
       </ul>

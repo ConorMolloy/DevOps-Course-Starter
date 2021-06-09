@@ -5,8 +5,9 @@ from app.to_do_item import ToDoItem
 
 class ViewModel:
     """ViewModel that will populate HTML templates"""
-    def __init__(self, items:List[ToDoItem]):
+    def __init__(self, items:List[ToDoItem], user):
         self._items = items
+        self.user = user
 
     @property
     def items(self):

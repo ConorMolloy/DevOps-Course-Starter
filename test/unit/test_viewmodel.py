@@ -1,14 +1,19 @@
 from app.viewmodel import ViewModel
 from app.to_do_item import ToDoItem
+from app.user import User
+from app.role import Role
 from datetime import datetime, timedelta
 
 class TestViewModel:
+
+    test_user = User('MrTestUser', Role.WRITER.value)
+
     def test_items(self):
         first_item = ToDoItem("1234", "First Test Item", "To Do", '2021-01-06 21:14:06.518')
         second_item = ToDoItem("4321", "In progress Item", "Doing", '2021-01-06 21:14:06.518')
 
         item_list = [first_item, second_item]
-        view_model_under_test = ViewModel(item_list)
+        view_model_under_test = ViewModel(item_list, self.test_user)
 
         diff = set(item_list) ^ set(view_model_under_test.items)
 
@@ -23,7 +28,7 @@ class TestViewModel:
 
         item_list = [first_item, second_item, third_item]
 
-        view_model_under_test = ViewModel(item_list)
+        view_model_under_test = ViewModel(item_list, self.test_user)
 
         assert view_model_under_test.to_do == [first_item]
 
@@ -34,7 +39,7 @@ class TestViewModel:
 
         item_list = [first_item, second_item, third_item]
 
-        view_model_under_test = ViewModel(item_list)
+        view_model_under_test = ViewModel(item_list, self.test_user)
 
         assert view_model_under_test.doing == [second_item]
 
@@ -45,7 +50,7 @@ class TestViewModel:
 
         item_list = [first_item, second_item, third_item]
 
-        view_model_under_test = ViewModel(item_list)
+        view_model_under_test = ViewModel(item_list, self.test_user)
 
         assert view_model_under_test.done == [third_item]
 
@@ -62,7 +67,7 @@ class TestViewModel:
 
         item_list = [one, two, three, four, five, six]
 
-        view_model_under_test = ViewModel(item_list)
+        view_model_under_test = ViewModel(item_list, self.test_user)
 
         assert view_model_under_test.show_all_done_items == [one, two]
 
@@ -77,7 +82,7 @@ class TestViewModel:
 
         item_list = [one, two, three, four]
 
-        view_model_under_test = ViewModel(item_list)
+        view_model_under_test = ViewModel(item_list, self.test_user)
 
         assert view_model_under_test.show_all_done_items == [one, two, three, four]
 
@@ -92,7 +97,7 @@ class TestViewModel:
 
         item_list = [first_item, second_item, third_item]
 
-        view_model_under_test = ViewModel(item_list)
+        view_model_under_test = ViewModel(item_list, self.test_user)
         assert view_model_under_test.recent_done_items == [second_item]
 
     def test_older_done_items(self):
@@ -105,5 +110,5 @@ class TestViewModel:
 
         item_list = [first_item, second_item, third_item]
 
-        view_model_under_test = ViewModel(item_list)
+        view_model_under_test = ViewModel(item_list, self.test_user)
         assert view_model_under_test.older_done_items == [first_item, third_item]

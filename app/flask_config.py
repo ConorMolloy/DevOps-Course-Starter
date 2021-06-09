@@ -3,21 +3,21 @@ import os
 
 
 class FlaskConfig:
+    """Environment variables needed by Flask"""
     def __init__(self):
         self.SECRET_KEY = os.environ.get('SECRET_KEY')
-        self.SESSION_TYPE = os.environ.get('SESSION_TYPE')
         self.OAUTHLIB_INSECURE_TRANSPORT = os.environ.get('OAUTHLIB_INSECURE_TRANSPORT')
 
 
 class Config:
-    """Config class containing the environment variables needed for the app
-    """
+    """Config class containing the environment variables needed for the app"""
     def __init__(self):
         self._db_url = os.environ.get('DB_URL')
         self._db_name = os.environ.get('DB_NAME')
         self._todo_collection_name = os.environ.get('TODO_COLLECTION_NAME')
         self._client_id = os.environ.get('CLIENT_ID')
-        self._client_secret = os.environ.get('CLIENT_SECRET') 
+        self._client_secret = os.environ.get('CLIENT_SECRET')
+        self._writer_user = os.environ.get('WRITER_USER')
 
     @property
     def db_url(self) -> str:
@@ -58,3 +58,11 @@ class Config:
             str: GitHub client secret used in the OAuth flow
         """
         return self._client_secret
+
+    @property
+    def writer_user(self) -> str:
+        """
+        Returns:
+            str: The hardcoded user that has authorisation to add items
+        """
+        return self._writer_user
