@@ -5,8 +5,24 @@ import os
 class FlaskConfig:
     """Environment variables needed by Flask"""
     def __init__(self):
-        self.SECRET_KEY = os.environ.get('SECRET_KEY')
-        self.OAUTHLIB_INSECURE_TRANSPORT = os.environ.get('OAUTHLIB_INSECURE_TRANSPORT')
+        self.SECRET_KEY = os.environ.get('SECRET_KEY') # pylint:disable=invalid-name
+        self.OAUTHLIB_INSECURE_TRANSPORT = os.environ.get('OAUTHLIB_INSECURE_TRANSPORT') # pylint:disable=invalid-name
+
+    @property
+    def secret_key(self) -> str:
+        """
+        Returns:
+            str: returns secret key for the app
+        """
+        return self.SECRET_KEY
+
+    @property
+    def oauthlib_insecure_transport(self) -> str:
+        """
+        Returns:
+            str: returns oauthlib_insecure_transport
+        """
+        return self.OAUTHLIB_INSECURE_TRANSPORT
 
 
 class Config:
