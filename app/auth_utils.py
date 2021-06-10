@@ -1,6 +1,6 @@
 """Helper method that specifies the @autherize decorator"""
 from functools import wraps
-from flask import current_app, abort
+from flask import abort
 from flask_login import current_user
 
 def authorized_for(role: str):
