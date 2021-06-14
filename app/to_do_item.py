@@ -5,8 +5,7 @@ from typing import Type, TypeVar
 T = TypeVar('T', bound='ToDoItem') # pylint:disable=invalid-name
 
 class ToDoItem:
-    """DTO for ToDoItems between the UI and the database
-    """
+    """DTO for ToDoItems between the UI and the database"""
     def __init__(self, item_id: str, title: str, status: str, last_modified: str):
         self._id = item_id
         self._status = status

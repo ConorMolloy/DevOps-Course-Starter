@@ -5,13 +5,18 @@ from flask_login import LoginManager, login_required, login_user, current_user
 from oauthlib.oauth2 import WebApplicationClient
 import requests
 from app.viewmodel import ViewModel
-from app.flask_config import Config, FlaskConfig
+from app.flask_config import FlaskConfig, AuthConfig
 from app.client_interface import ClientInterface
 from app.user import User
 from app.auth_utils import authorized_for
 from app.role import Role
 
-def create_app(client: ClientInterface, config: Config, login_manager: LoginManager):
+def create_app(
+                client: ClientInterface,
+                auth_config: AuthConfig,
+                flask_config: FlaskConfig,
+                login_manager: LoginManager
+                ):
     """
     Args:
         client (ClientInterface):
@@ -19,11 +24,11 @@ def create_app(client: ClientInterface, config: Config, login_manager: LoginMana
         config (Config): Config class with environment  variables initialised
     """
     app = Flask(__name__)
-    app.config.from_object(FlaskConfig())
+    app.config.from_object(flask_config)
 
     login_manager.init_app(app)
 
-    web_application_client = WebApplicationClient(config.client_id)
+    web_application_client = WebApplicationClient(auth_config.client_id)
 
     @login_manager.unauthorized_handler
     def unauthenticated():
@@ -40,8 +45,8 @@ def create_app(client: ClientInterface, config: Config, login_manager: LoginMana
             abort(401)
         url, _, body = web_application_client.prepare_token_request(
             'https://github.com/login/oauth/access_token',
-            client_id=config.client_id,
-            client_secret=config.client_secret,
+            client_id=auth_config.client_id,
+            client_secret=auth_config.client_secret,
             code=auth_code,
             state=state)
 
@@ -55,8 +60,8 @@ def create_app(client: ClientInterface, config: Config, login_manager: LoginMana
             headers=token_headers,
             data=body,
             auth=(
-                config.client_id,
-                config.client_secret
+                auth_config.client_id,
+                auth_config.client_secret
             ),
         )
 
@@ -73,7 +78,7 @@ def create_app(client: ClientInterface, config: Config, login_manager: LoginMana
 
     @login_manager.user_loader
     def load_user(user_id):
-        if user_id == config.writer_user:
+        if user_id == auth_config.writer_user:
             return User(user_id, role=Role.WRITER.value)
         return User(user_id)
 

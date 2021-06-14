@@ -1,11 +1,13 @@
 from datetime import time
 import pytest
-from flask_login import LoginManager, AnonymousUserMixin
+from flask_login import LoginManager
+from pymongo import MongoClient
 from unittest.mock import patch
 from app.create_app import create_app
-from app.flask_config import Config
+from app.flask_config import DatabaseConfig, AuthConfig, FlaskConfig
 from app.atlas_client import AtlasClient
 from app.role import Role
+from test.test_user import TestUser
 import time
 from selenium import webdriver
 from threading import Thread
@@ -13,10 +15,6 @@ from dotenv import find_dotenv, load_dotenv
 from selenium.webdriver.firefox.options import Options
 import pymongo
 import os
-
-class TestUser(AnonymousUserMixin):
-    id = None
-    role = Role.WRITER.value
 
 @pytest.fixture(scope='module')
 def test_app():
@@ -27,16 +25,17 @@ def test_app():
     except:
         print("Could not find .env")
 
-    app_config = Config()
-    app_config._todo_collection_name = os.environ.get('TEST_COLLECTION')
-    db_client = pymongo.MongoClient(f"{app_config.db_url}", connect=False)
-    db = db_client[f"{app_config.db_name}"]
-    client = AtlasClient(db, app_config)
+    database_config = DatabaseConfig()
+    auth_config = AuthConfig()
+    flask_config = FlaskConfig()
+    database_config._todo_collection_name = os.environ.get('TEST_COLLECTION')
+    mongo_client = MongoClient(database_config.db_url)
+    client = AtlasClient(database_config, mongo_client)
     client._collection.delete_many({})
     login_manager = LoginManager()
     login_manager.anonymous_user = TestUser
 
-    application = create_app(client, app_config, login_manager)
+    application = create_app(client, auth_config, flask_config, login_manager)
     application.config['LOGIN_DISABLED'] = True
 
     # start the app in its own thread.
