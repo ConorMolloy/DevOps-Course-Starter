@@ -5,18 +5,13 @@ from flask_login import LoginManager, login_required, login_user, current_user
 from oauthlib.oauth2 import WebApplicationClient
 import requests
 from app.viewmodel import ViewModel
-from app.flask_config import FlaskConfig, AuthConfig
+from app.flask_config import AuthConfig
 from app.client_interface import ClientInterface
 from app.user import User
 from app.auth_utils import authorized_for
 from app.role import Role
 
-def create_app(
-                client: ClientInterface,
-                auth_config: AuthConfig,
-                flask_config: FlaskConfig,
-                login_manager: LoginManager
-                ):
+def create_app(client: ClientInterface, auth_config: AuthConfig, login_manager: LoginManager):
     """
     Args:
         client (ClientInterface):
@@ -24,7 +19,6 @@ def create_app(
         config (Config): Config class with environment  variables initialised
     """
     app = Flask(__name__)
-    app.config.from_object(flask_config)
 
     login_manager.init_app(app)
 

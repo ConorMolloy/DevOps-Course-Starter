@@ -25,7 +25,8 @@ def test_index_page():
     login_manager.anonymous_user = TestUser
 
     #Create the new app.
-    test_app = create_app(client, auth_config, flask_config, login_manager)
+    test_app = create_app(client, auth_config, login_manager)
+    test_app.config.from_object(flask_config)
     test_app.config['LOGIN_DISABLED'] = True
 
     mock_item_response = ToDoItem.new_item_as_dict("Hello form the integration tests")

@@ -35,7 +35,8 @@ def test_app():
     login_manager = LoginManager()
     login_manager.anonymous_user = TestUser
 
-    application = create_app(client, auth_config, flask_config, login_manager)
+    application = create_app(client, auth_config, login_manager)
+    application.config.from_object(flask_config)
     application.config['LOGIN_DISABLED'] = True
 
     # start the app in its own thread.

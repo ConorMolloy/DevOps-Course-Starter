@@ -12,7 +12,8 @@ mongo_client = MongoClient(database_config.db_url)
 atlas_client = AtlasClient(database_config, mongo_client)
 login_manager = LoginManager()
 
-app = create_app(atlas_client, auth_config, flask_config, login_manager)
+app = create_app(atlas_client, auth_config, login_manager)
+app.config.from_object(flask_config)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
