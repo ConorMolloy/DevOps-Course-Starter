@@ -14,6 +14,6 @@ def authorized_for(role: str):
         def decorated_view(*args, **kwargs):
             if current_user.role == role:
                 return func(*args, **kwargs)
-            return abort(401)
+            return abort(403)
         return decorated_view
     return autherize
