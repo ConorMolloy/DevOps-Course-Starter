@@ -113,7 +113,7 @@ def create_app(client: ClientInterface, auth_config: AuthConfig, login_manager: 
         return redirect('/')
 
 
-    @app.route('/delete/<item_id>', methods=['GET'])
+    @app.route('/delete/<item_id>', methods=['POST'])
     @login_required
     @authorized_for('writer')
     def delete_item(item_id):

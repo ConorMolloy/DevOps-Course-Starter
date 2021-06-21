@@ -31,7 +31,7 @@
                     </tr>
                   {% endif %}
                   <tr>
-                    <form class="remove" action="/delete/{{item.item_id}}"><input type="submit" value="Delete" id="{{item.title}}_delete"></form>
+                    <form class="remove" action="/delete/{{item.item_id}}" method="POST"><input type="submit" value="Delete" id="{{item.title}}_delete"></form>
                   </tr>
                 </table>
               {% endif %}
