@@ -1,7 +1,7 @@
 import pytest
 import mongomock
 from dotenv import find_dotenv, load_dotenv
-from app.flask_config import Config
+from app.flask_config import DatabaseConfig
 from app.atlas_client import AtlasClient
 from app.to_do_item import ToDoItem
 from datetime import datetime
@@ -13,11 +13,11 @@ def atlas_client() -> AtlasClient:
     file_path = find_dotenv('.env.test', usecwd=True)
     load_dotenv(file_path, override=True)
 
-    app_config = Config()
+    db_config = DatabaseConfig()
 
-    mocked_db = mongomock.MongoClient().get_database("db")
+    mocked_client = mongomock.MongoClient()
 
-    return AtlasClient(mocked_db, app_config)
+    return AtlasClient(db_config, mocked_client)
 
 def test_get_items_returns_list_of_all_items_in_collection(atlas_client):
     items = [ToDoItem.new_item_as_dict("First Post"), ToDoItem.new_item_as_dict("Second Post")]

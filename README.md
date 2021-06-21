@@ -27,6 +27,14 @@ DB_URL=<url to your atlas cluster>
 DB_NAME=<db name>
 TODO_COLLECTION_NAME=<collection name>
 
+CLIENT_ID=<github client id>
+CLIENT_SECRET=<github client secret>
+
+SECRET_KEY=<flask secret key>
+OAUTHLIB_INSECURE_TRANSPORT=1
+
+WRITER_USER=<hardcoded github user that has write access to the app>
+
 TEST_COLLECTION=<another collection for e2e tests>
 ```
 
@@ -87,3 +95,6 @@ docker run --env-file .env test-image test/e2e
 
 # Deployment Pipeline
 When a PR is merged on this project the changes will be deployed to Heroku (https://devops-starter.herokuapp.com/) and a copy of the image will be pushed to DockerHub (https://hub.docker.com/repository/docker/mertmanable/todo-app)
+
+# Auth
+The app now supports OAuth sign-in with Github. Any user can read the apps data but only the user defined in the .env file will be able to write to the app.

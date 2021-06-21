@@ -3,9 +3,9 @@ from datetime import datetime
 from typing import List
 from bson.objectid import ObjectId
 from pymongo.collection import ReturnDocument
-from pymongo.database import Database
+from pymongo import MongoClient
 from app.to_do_item import ToDoItem
-from app.flask_config import Config
+from app.flask_config import DatabaseConfig
 from app.client_interface import ClientInterface
 
 class AtlasClient(ClientInterface):
@@ -13,9 +13,10 @@ class AtlasClient(ClientInterface):
     Args:
         ClientInterface: The interface that a client ned to conform to for the app to work
     """
-    def __init__(self, db: Database, config: Config):
-        self._db = db
-        self._collection = db[config.todo_collection_name]
+    def __init__(self, config: DatabaseConfig, mongo_client: MongoClient):
+        self._client = mongo_client
+        self._database = self._client[config.db_name]
+        self._collection = self._database[config.todo_collection_name]
 
     def get_items(self) -> List[ToDoItem]:
         return list(map(lambda doc: ToDoItem.from_json(doc), self._collection.find())) # pylint:disable=unnecessary-lambda

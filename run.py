@@ -1,15 +1,19 @@
 """Entry point for Flask"""
-import pymongo
+from flask_login import LoginManager
+from pymongo import MongoClient
 from app.create_app import create_app
-from app.flask_config import Config
+from app.flask_config import DatabaseConfig, AuthConfig, FlaskConfig
 from app.atlas_client import AtlasClient
 
-app_config = Config()
-client = pymongo.MongoClient(app_config.db_url)
-db = client[app_config.db_name]
-atlas_client = AtlasClient(db, app_config)
+database_config = DatabaseConfig()
+auth_config = AuthConfig()
+flask_config = FlaskConfig()
+mongo_client = MongoClient(database_config.db_url)
+atlas_client = AtlasClient(database_config, mongo_client)
+login_manager = LoginManager()
 
-app = create_app(atlas_client, app_config)
+app = create_app(atlas_client, auth_config, login_manager)
+app.config.from_object(flask_config)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
