@@ -207,7 +207,7 @@ python-versions = "*"
 
 [[package]]
 name = "mongomock"
-version = "3.22.1"
+version = "3.23.0"
 description = "Fake pymongo stub for testing simple MongoDB-dependent code"
 category = "dev"
 optional = false
@@ -425,7 +425,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "09282a45d177af32331858bdc544d355a08c5419480fcb8be32a1586fc31749f"
+content-hash = "2a4f0c975ddcb1c3e8670f0cda359b5f3174e927663dba5e8d3cd185d2e83740"
 
 [metadata.files]
 astroid = [
@@ -561,8 +561,8 @@ mccabe = [
     {file = "mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"},
 ]
 mongomock = [
-    {file = "mongomock-3.22.1-py2.py3-none-any.whl", hash = "sha256:c721a7b8ce3ae44442de3cf314a89f4be3fe65bd337d8e7d0d909d8af0d1584e"},
-    {file = "mongomock-3.22.1.tar.gz", hash = "sha256:70d6d0d5e4c4e225eb46a109c527c2388e54f684b6d32bdb4718c0618ecec168"},
+    {file = "mongomock-3.23.0-py2.py3-none-any.whl", hash = "sha256:01ce0c4eb02b2eced0a30882412444eaf6de27a90f2502bee64e04e3b8ecdc90"},
+    {file = "mongomock-3.23.0.tar.gz", hash = "sha256:d9945e7c87c221aed47c6c10708376351a5f5ee48060943c56ba195be425b0dd"},
 ]
 oauthlib = [
     {file = "oauthlib-3.1.1-py2.py3-none-any.whl", hash = "sha256:42bf6354c2ed8c6acb54d971fce6f88193d97297e18602a3a886603f9d7730cc"},
